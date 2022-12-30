@@ -1,0 +1,27 @@
+//test class for restrict teaching hindi class
+
+@isTest
+public class testRestrictTeachingHindi {
+    
+    @isTest
+    public static void TestNewTeaching(){
+        
+        Class__c cl = new Class__c(Name__c = 'all subject');
+        insert cl;
+        Contact ct = new Contact(lastName = 'Super');
+        insert ct;
+        Teach__c testTeach = new Teach__c(Name = 'teachesAllSubject',
+                                          Class__c = cl.Id,
+                                          Teacher__c = ct.Id,
+                                          Subject__c = 'Hindi');
+        
+        Test.startTest();
+        Database.SaveResult result = Database.insert(testTeach,false);
+        Test.stopTest();
+        System.debug(result.getErrors()[0].getMessage());
+        System.assert(!result.isSuccess());
+        System.assert(result.getErrors().size() > 0);
+        System.assertEquals('Teacher cannot select Hindi',result.getErrors()[0].getMessage());
+    }
+    
+}
