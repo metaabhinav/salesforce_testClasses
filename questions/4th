@@ -1,0 +1,21 @@
+@isTest
+public class testStudentUpdate {
+    
+    @isTest
+    public static void testStudentCount(){
+        Class__c cl = new Class__c(Name__c = 'Japanese',MaxSize__c = 10);
+        insert cl;
+        List<Student__c> stuList = new List<Student__C>{new Student__c(FirstName__c = 'sd',Name = 'sdPriya',Sex__c = 'Female',Class__c = cl.Id),
+            new Student__c(FirstName__c = 'sddd',Name = 'sddSpriya',Sex__c = 'Female',Class__c = cl.Id),
+            new Student__c(FirstName__c = 'sdsads',Name = 'dsdsMpriya',Sex__c = 'Female',Class__c = cl.Id)};
+                insert StuList;
+        Student__c newSt2 = new Student__c(FirstName__c = 'sdasasaas',Name = 'Rish',Sex__c = 'Male',Class__c = cl.Id);
+        Test.startTest();
+        Database.SaveResult result = Database.insert(newSt2,false);
+        Test.stopTest();
+        System.assert(!result.isSuccess());	
+        System.assert(result.getErrors().size() > 0);
+        System.assertEquals(3,cl.MyCount__c);
+        
+    }
+} 
