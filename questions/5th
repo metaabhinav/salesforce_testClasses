@@ -1,0 +1,25 @@
+@isTest
+public class testStageChange {
+    
+    @isTest
+    public static void changeStageMethod(){
+        //given
+        Account acct = new Account(Name='Test Account');
+        insert acct;
+        Opportunity opp = new Opportunity(Name=acct.Name + ' Opportunity1',
+                                          StageName='Prospecting',
+                                          CloseDate=System.today().addMonths(1),
+                                          AccountId=acct.Id);
+        insert opp;
+        opp.StageName = 'Closed Won';
+        
+        //when
+        Test.startTest();
+        Database.SaveResult result = Database.update(opp,false);
+        Test.stopTest();
+        
+        //then
+        System.assertEquals(opp.CloseDate, System.today().addDays(1));
+    }
+    
+}
