@@ -1,0 +1,21 @@
+@isTest
+public class resetClassTest {
+
+    @isTest
+    static void test(){
+        //given
+       	 Class__c cl = new Class__c(Name__c = 'SST',MaxSize__c = 10,MyCount__c = 10);
+        insert cl;
+        cl.Custom_Status__c = 'Reset';
+        
+        //when
+        Test.startTest();
+        update cl;
+        Test.stopTest();
+        
+        //then
+        List<Student__c> studentCheck = cl.students__r;
+        
+        system.assertEquals(0,studentCheck.size());
+    }
+}
